@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    System.DateTime dateTime;
+    public RobotLogic robotLogic;
 
-    public double minuteSpeed = 1;
+    public Transform hourAxis;
+    public Transform minuteAxis;
+
+    public double addSecond = 1;
+
+    public float timeSpeed = 1f;
 
     public int curHour;
     public int curMinute;
@@ -21,11 +26,13 @@ public class Timer : MonoBehaviour
 
     int nextRenWuIndex = 1;
 
+
+
     IEnumerator Start()
     {
         yield return null;
 
-        dateTime = new System.DateTime(2020, 5, 5, 8, 10, 0, 0);
+        System.DateTime dateTime = new System.DateTime(2020, 5, 5, 8, 10, 0, 0);
 
         List<System.DateTime> renWuDateTimeList = new List<System.DateTime>();
         renWuDateTimeList.Add(penWuTime);
@@ -35,16 +42,26 @@ public class Timer : MonoBehaviour
 
         while (true)
         {
-            dateTime = dateTime.AddMinutes(minuteSpeed * Time.deltaTime);
+            dateTime = dateTime.AddSeconds(addSecond * timeSpeed * Time.deltaTime);
 
             curHour = dateTime.Hour;
             curMinute = dateTime.Minute;
+
+            float minuteValue = curMinute + dateTime.Second / 60f;
+            minuteAxis.localEulerAngles = new Vector3(0f, 0f, Mathf.Lerp(0f, -360f, minuteValue / 60f));
+
+            float hourValue = dateTime.Hour + minuteValue / 60f;
+            if (hourValue > 12f)
+            {
+                hourValue -= 12f;
+            }
+            hourAxis.localEulerAngles = new Vector3(0f, 0f, Mathf.Lerp(0f, -360f, hourValue / 12f));
 
             System.DateTime nextRenWuTime = renWuDateTimeList[nextRenWuIndex];
 
             if (dateTime >= nextRenWuTime)
             {
-                Debug.Log("开始执行任务：" + nextRenWuIndex + " 时间:" + dateTime.ToLongDateString() + dateTime.ToLongTimeString() + nextRenWuTime.ToLongDateString() + nextRenWuTime.ToLongTimeString());
+                robotLogic.OnTimerEvent(nextRenWuIndex);
 
                 renWuDateTimeList[nextRenWuIndex] = nextRenWuTime.AddDays(1);
 

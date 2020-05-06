@@ -15,4 +15,9 @@ public class RobotLogic : MonoBehaviour
     {
 
     }
+
+    public void OnTimerEvent(int _index)
+    {
+
+    }
 }
