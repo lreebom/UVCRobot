@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Hospital_LowPoly/Maps/Demo.unity
+    guid: 072d971451384ba41b15c99c30ee49b3
   m_configObjects: {}
