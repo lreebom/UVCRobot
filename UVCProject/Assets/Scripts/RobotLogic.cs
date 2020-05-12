@@ -33,7 +33,7 @@ public class RobotLogic : MonoBehaviour
 
     IEnumerator IE_UVC(int _index)
     {
-        timer.timeSpeed = 0.01f;
+        timer.timeSpeed = 0.0005f;
 
         if (lastRenWu != null)
         {
@@ -42,7 +42,7 @@ public class RobotLogic : MonoBehaviour
             agent.SetDestination(lastRenWu.startEndPoint.position);
 
             LeanTween.move(gameObject, lastRenWu.startEndPoint.position, 1f);
-            LeanTween.rotateLocal(gameObject, Vector3.zero, 1f);
+            LeanTween.rotate(gameObject, lastRenWu.startEndPoint.eulerAngles, 1f);
 
             yield return new WaitForSeconds(1.5f);
 
@@ -56,15 +56,14 @@ public class RobotLogic : MonoBehaviour
         }
 
         lastRenWu = renWuInfos[_index];
-        Debug.Log(110);
+
         yield return StartCoroutine(IE_GoToTarget(lastRenWu.startEndPointOut.position));
-        Debug.Log(111);
+
         agent.SetDestination(lastRenWu.startEndPoint.position);
-        Debug.Log(112);
+
         LeanTween.move(gameObject, lastRenWu.startEndPoint.position, 1f);
-        LeanTween.rotateLocal(gameObject, Vector3.zero, 1f);
+        LeanTween.rotate(gameObject, lastRenWu.startEndPoint.eulerAngles, 1f);
         yield return new WaitForSeconds(1.5f);
-        Debug.Log(113);
 
         lastRenWu.shangDuan.SetParent(transform);
 
@@ -84,7 +83,7 @@ public class RobotLogic : MonoBehaviour
         agent.SetDestination(originInfo.startEndPoint.position);
 
         LeanTween.move(gameObject, originInfo.startEndPoint.position, 1f);
-        LeanTween.rotateLocal(gameObject, Vector3.zero, 1f);
+        LeanTween.rotate(gameObject, originInfo.startEndPoint.eulerAngles, 1f);
 
         yield return new WaitForSeconds(1.5f);
 
