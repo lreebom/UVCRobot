@@ -13,4 +13,6 @@ public class RenWuInfo : MonoBehaviour
     public Transform shangDuanParent;
 
     public Transform shangDuan;
+
+    
 }
